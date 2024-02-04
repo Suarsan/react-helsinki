@@ -29,6 +29,7 @@ const App = () => {
       <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
   )
+
 }
 
 export default App

@@ -11,7 +11,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filterValue, setFilterValue] = useState('')
   
-  const getPersons = () => { axios.get('http://localhost:3001/persons').then(o => setPersons(o.data)) }
+  const getPersons = () => { axios.get('http://localhost:3001/persons').then(res => setPersons(res.data)) }
+  const addPerson = (person) => { axios.post('http://localhost:3001/persons', person).then(res => setPersons([ ...persons, res.data ])) }
   useEffect(getPersons, [])
 
   const handleNameChange = (e) => setNewName(e.target.value)
@@ -24,7 +25,7 @@ const App = () => {
     if (checkIfNameAlreadyExists(persons, newName)) {
       alert(`${newName} is already added to phonebook`)
     } else {
-      setPersons([ ...persons, { name: newName, number: newNumber } ])
+      addPerson({ name: newName, number: newNumber, id: `${persons.length + 1}` })
     }
     setNewName('')
     setNewNumber('')

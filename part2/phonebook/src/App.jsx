@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Filter from './Filter'
 import Persons from './Persons'
 import PersonForm from './PersonForm'
-import axios from 'axios'
+import personsService from './services/notes'
 
 const App = () => {
 
@@ -10,10 +10,10 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterValue, setFilterValue] = useState('')
-  
-  const getPersons = () => { axios.get('http://localhost:3001/persons').then(res => setPersons(res.data)) }
-  const addPerson = (person) => { axios.post('http://localhost:3001/persons', person).then(res => setPersons([ ...persons, res.data ])) }
-  useEffect(getPersons, [])
+
+  const addPerson = (person) => { personsService.add(person).then(person => setPersons([ ...persons, person ])) }
+  const refreshPersons = () => { personsService.getAll().then(persons => setPersons(persons)) }
+  useEffect(refreshPersons, [])
 
   const handleNameChange = (e) => setNewName(e.target.value)
   const handleNumberChange = (e) => setNewNumber(e.target.value)

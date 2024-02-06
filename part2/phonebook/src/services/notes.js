@@ -13,7 +13,6 @@ const getAll = () => {
 }
 
 const update = (person) => {
-    console.dir(person)
     const request = axios.put(`${BASE_URL}/persons/${person.id}`, person)
     return request.then(res => res.data)
 }

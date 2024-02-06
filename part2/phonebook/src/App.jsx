@@ -23,7 +23,11 @@ const App = () => {
   const handleAdd = (e) => {
     e.preventDefault()
     if (checkIfNameAlreadyExists(persons, newName)) {
-      alert(`${newName} is already added to phonebook`)
+      const confirmed = confirm(`'${newName}' is already added to phonebook, replace the old number with a new one?`)
+      console.dir(e)
+      if (confirmed) {
+        personsService.update({ ...persons.find(p => p.name === newName), number: newNumber }).then(person => setPersons(persons.map(p => p.id === person.id ? person : p)))
+      }
     } else {
       addPerson({ name: newName, number: newNumber, id: `${persons.length + 1}` })
     }

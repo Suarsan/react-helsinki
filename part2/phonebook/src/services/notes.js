@@ -12,4 +12,9 @@ const add = (person) => {
     return request.then(res => res.data)
 }
 
-export default { getAll, add }
+const remove = (id) => {
+    const request = axios.delete(`${BASE_URL}/persons/${id}`)
+    return request.then(res => res.data)
+}
+
+export default { getAll, add, remove }

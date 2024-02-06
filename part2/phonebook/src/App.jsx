@@ -20,7 +20,7 @@ const App = () => {
   const handleFilterValueChange = (e) => setFilterValue(e.target.value)
   const checkIfNameAlreadyExists = (persons, name) =>  persons.find(p => p.name === name)
   const filteredPersons = persons.filter(p => p.name.toLowerCase().includes(filterValue.toLowerCase()))
-  const handleClick = (e) => {
+  const handleAdd = (e) => {
     e.preventDefault()
     if (checkIfNameAlreadyExists(persons, newName)) {
       alert(`${newName} is already added to phonebook`)
@@ -30,16 +30,32 @@ const App = () => {
     setNewName('')
     setNewNumber('')
   }
-  
+  const handleDelete = (person) => {
+    const confirmed = confirm(`Delete '${person.name}'`)
+    if (confirmed) {
+      personsService.remove(person.id).then(res => setPersons(persons.filter(p => p.id !== res.id)))
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter filterValue={filterValue} handleFilterValueChange={handleFilterValueChange} />
-      <PersonForm nameValue={newName} nameOnChange={handleNameChange} numberValue={newNumber} numberOnChange={handleNumberChange} addClick={handleClick}/>
+      <Filter 
+        filterValue={filterValue} 
+        handleFilterValueChange={handleFilterValueChange} />
+      <PersonForm 
+        nameValue={newName} 
+        nameOnChange={handleNameChange} 
+        numberValue={newNumber} 
+        numberOnChange={handleNumberChange} 
+        addClick={handleAdd}/>
       <h2>Numbers</h2>
-      <Persons persons={filteredPersons} />
+      <Persons 
+        persons={filteredPersons} 
+        handleDelete={handleDelete}/>
     </div>
   )
+
 }
 
 export default App

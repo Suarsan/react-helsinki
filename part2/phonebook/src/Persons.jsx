@@ -1,6 +1,6 @@
-const Persons = ({ persons }) => {
-  
-  return <ul>{ persons.map(p => <li key={p.name}>{p.name} {p.number}</li>) }</ul>
+const Persons = ({ persons, handleDelete }) => {
+
+  return <ul>{ persons.map(p => <li key={p.name}>{p.name} {p.number} <button onClick={() => { handleDelete(p) }}>delete</button></li>) }</ul>
 
 }
 

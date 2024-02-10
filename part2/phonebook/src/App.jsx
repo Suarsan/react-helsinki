@@ -42,7 +42,7 @@ const App = () => {
       }
     } else {
       personsService
-        .add({ name: newName, number: newNumber, id: `${persons.length + 1}` }).then(person => {
+        .add({ name: newName, number: newNumber }).then(person => {
           setPersons([ ...persons, person ])
           setSuccessfulMessage(`'${newName}' has been added successfully`)
           setTimeout(() => setSuccessfulMessage(null), 3000)
@@ -60,8 +60,8 @@ const App = () => {
     if (confirmed) {
       personsService.remove(person.id)
         .then(res => {
+          setSuccessfulMessage(`'${persons.find(p => p.id === res.id)?.name}' has been deleted successfully`)
           setPersons(persons.filter(p => p.id !== res.id))
-          setSuccessfulMessage(`'${res.name}' has been deleted successfully`)
           setTimeout(() => setSuccessfulMessage(null), 3000)
         })
         .catch(err => {
